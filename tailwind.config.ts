@@ -52,6 +52,19 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // FreshBite brand colors
+        brand: {
+          orange: "#FF6B35",
+          "orange-light": "#FF8A65",
+          "orange-dark": "#E55100",
+          red: "#D32F2F",
+          green: "#2E7D32",
+          "green-light": "#66BB6A",
+          "green-dark": "#1B5E20",
+          cream: "#FFF8E1",
+          "gray-warm": "#F5F5F5",
+          "gray-cool": "#ECEFF1",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -67,6 +80,14 @@ export default {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      fontFamily: {
+        sans: ["Inter", "ui-sans-serif", "system-ui"],
+        heading: ["Poppins", "ui-sans-serif", "system-ui"],
+      },
+      boxShadow: {
+        soft: "0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)",
+        "soft-lg": "0 10px 40px -10px rgba(0, 0, 0, 0.1)",
       },
       keyframes: {
         "accordion-down": {
@@ -85,10 +106,30 @@ export default {
             height: "0",
           },
         },
+        "fade-in": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(10px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
+        "slide-in": {
+          "0%": {
+            transform: "translateX(-100%)",
+          },
+          "100%": {
+            transform: "translateX(0)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-in": "fade-in 0.6s ease-out",
+        "slide-in": "slide-in 0.3s ease-out",
       },
     },
   },
