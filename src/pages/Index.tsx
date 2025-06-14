@@ -4,6 +4,7 @@ import { ArrowRight, Star, Clock, Users, CheckCircle } from "lucide-react";
 import Navigation from "@/components/ui/navigation";
 import Hero from "@/components/ui/hero";
 import FoodCard from "@/components/ui/food-card";
+import QuickLinks from "@/components/ui/quick-links";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -55,7 +56,7 @@ const Index = () => {
   const categories = [
     { name: "Burgers", icon: "🍔", count: 12 },
     { name: "Pizza", icon: "🍕", count: 8 },
-    { name: "Healthy", icon: "🥗", count: 15 },
+    { name: "Healthy", icon: "��", count: 15 },
     { name: "Asian", icon: "🍜", count: 10 },
     { name: "Desserts", icon: "🍰", count: 6 },
     { name: "Drinks", icon: "🥤", count: 12 },
@@ -250,8 +251,15 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Call to Action */}
+      {/* Quick Links Section */}
       <section className="section-padding bg-white">
+        <div className="container">
+          <QuickLinks />
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="section-padding gradient-bg">
         <div className="container">
           <Card className="bg-gradient-to-r from-brand-orange to-brand-red text-white overflow-hidden">
             <CardContent className="p-12 text-center relative">
@@ -265,13 +273,15 @@ const Index = () => {
                   away!
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button
-                    size="lg"
-                    className="bg-white text-brand-orange hover:bg-gray-100 font-semibold"
-                  >
-                    Order Now
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
+                  <Link to="/menu">
+                    <Button
+                      size="lg"
+                      className="bg-white text-brand-orange hover:bg-gray-100 font-semibold"
+                    >
+                      Order Now
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </Link>
                   <Button
                     size="lg"
                     variant="outline"

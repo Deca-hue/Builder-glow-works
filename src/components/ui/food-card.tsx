@@ -1,8 +1,10 @@
-import React from "react";
-import { Plus, Star, Clock } from "lucide-react";
+import React, { useState } from "react";
+import { Plus, Star, Clock, Check } from "lucide-react";
+import { useCart } from "@/contexts/CartContext";
 import { Button } from "./button";
 import { Badge } from "./badge";
 import { Card, CardContent } from "./card";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 interface FoodCardProps {
@@ -34,9 +36,40 @@ const FoodCard: React.FC<FoodCardProps> = ({
   isPopular = false,
   className,
 }) => {
-  const handleAddToCart = () => {
-    console.log("Adding to cart:", id);
-    // This would typically dispatch to cart state management
+  const { addItem, items } = useCart();
+  const [isAdding, setIsAdding] = useState(false);
+
+  // Check if item is already in cart
+  const isInCart = items.some((item) => item.id === id);
+
+  const handleAddToCart = async (e?: React.MouseEvent) => {
+    e?.stopPropagation(); // Prevent card click event
+
+    setIsAdding(true);
+
+    // Simulate a small delay for better UX
+    await new Promise((resolve) => setTimeout(resolve, 300));
+
+    addItem({
+      id,
+      name,
+      price,
+      image,
+      category,
+    });
+
+    toast.success(`${name} added to cart!`, {
+      description: `$${price.toFixed(2)} • ${category}`,
+      action: {
+        label: "View Cart",
+        onClick: () => {
+          // This would open the cart drawer
+          document.dispatchEvent(new CustomEvent("openCart"));
+        },
+      },
+    });
+
+    setIsAdding(false);
   };
 
   return (
@@ -72,16 +105,28 @@ const FoodCard: React.FC<FoodCardProps> = ({
         <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
           <Button
             onClick={handleAddToCart}
-            className="opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 btn-primary"
+            disabled={isAdding}
+            className={cn(
+              "opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300",
+              isInCart
+                ? "bg-brand-green hover:bg-brand-green-dark"
+                : "btn-primary",
+            )}
           >
-            <Plus className="h-4 w-4 mr-2" />
-            Add to Cart
+            {isAdding ? (
+              <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2" />
+            ) : isInCart ? (
+              <Check className="h-4 w-4 mr-2" />
+            ) : (
+              <Plus className="h-4 w-4 mr-2" />
+            )}
+            {isAdding ? "Adding..." : isInCart ? "In Cart" : "Add to Cart"}
           </Button>
         </div>
 
         {/* Price Badge */}
         <div className="absolute top-3 right-3">
-          <Badge className="bg-white text-brand-orange font-bold text-lg px-3 py-1">
+          <Badge className="bg-white text-brand-orange font-bold text-lg px-3 py-1 shadow-md">
             ${price.toFixed(2)}
           </Badge>
         </div>
@@ -115,10 +160,22 @@ const FoodCard: React.FC<FoodCardProps> = ({
           <Button
             onClick={handleAddToCart}
             size="sm"
-            variant="outline"
-            className="border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-white transition-colors"
+            disabled={isAdding}
+            className={cn(
+              "transition-all duration-200",
+              isInCart
+                ? "bg-brand-green hover:bg-brand-green-dark text-white border-brand-green"
+                : "border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-white",
+            )}
+            variant={isInCart ? "default" : "outline"}
           >
-            <Plus className="h-4 w-4" />
+            {isAdding ? (
+              <div className="animate-spin rounded-full h-4 w-4 border-2 border-current border-t-transparent" />
+            ) : isInCart ? (
+              <Check className="h-4 w-4" />
+            ) : (
+              <Plus className="h-4 w-4" />
+            )}
           </Button>
         </div>
       </CardContent>
