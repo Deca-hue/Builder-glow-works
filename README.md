@@ -36,3 +36,11 @@ TechConsult is a modern frontend project designed for a fictional consulting age
 
 ## 📁 Folder Structure
 
+
+---
+
+Let me know if you want:
+- A dark mode toggle added
+- Form integration with Formspree or Netlify
+- Deployment help to GitHub Pages  
+Happy to assist!
